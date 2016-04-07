@@ -7,11 +7,6 @@
 #include <CmdMessenger.h>  // CmdMessenger
 CmdMessenger cmdMessenger = CmdMessenger(Serial);
 
-struct sect_struct {
-  uint8_t cState : 5; //Current state // uses HIGH and LOW as an input
-  uint8_t pState : 5; //Previous state
-} bs[5]; // creating 5 instances of the structure for 5 sectors
-
 #define CELL_CLK (13)
 #define CELL_DATA (12)
 #define CELL_LT (11)
@@ -55,16 +50,13 @@ LOW, LOW, LOW, LOW, LOW,
 LOW, LOW, LOW, LOW, LOW, 
 LOW, LOW, LOW, LOW, LOW, 
 LOW, LOW, LOW, LOW, LOW,  
-}
+};
 
 
 uint8_t button_click (uint8_t line = BUTTON_LINE, byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT );
-void arm_segment( byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
-//void arm_sector(); 
 void arm_sector(byte t = 9, byte secId = 1 ,byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
-void disarm_sector(byte t = 9, byte secId = 1 ,byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
-
-void arm_cell(byte t , byte secId , byte cellId, byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
+void disarm_sector(byte secId = 1 ,byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
+void arm_cell(byte secId , byte cellId, byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);
 /////////////////////
 
 
@@ -76,7 +68,9 @@ void setup() {
   pinMode(BUTTON_LINE, INPUT);
   print_byte_sector("before: ", 1, _segment);
   //arm_cell(0,2,  _segment , CELL_CLK, CELL_DATA, CELL_LT);
-  arm_sector(); // must be called for the first time if not no buton presses will be registered
+  //arm_sector(); // must be called for the first time if not no buton presses will be registered
+  
+  
   print_byte_sector("after-arm-bef-dis: ", 1, _segment);
 disarm_sector();
   print_byte_sector("after-disarm: ", 1, _segment);
@@ -119,7 +113,6 @@ else{
     Serial.print("BUTTON CODE:\t");
     byte code = button_click();
     arm_sector();
-    //arm_segment();
     Serial.println(code, HEX);
   }
 } // else
