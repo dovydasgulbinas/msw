@@ -2,6 +2,7 @@
 
 void attachCommandCallbacks()// All callbacks must be added here!
 {
+  cmdMessenger.attach(1, button_n_disp);
   cmdMessenger.attach(4, print_num);
   cmdMessenger.attach(OnUnknownCommand);// default command ,ust be placed at the end!
 }
@@ -15,6 +16,36 @@ void print_num() {// this will completely override the values on the display // 
   printNumber(num, 0, 0, false);
 //
 }
+
+
+void button_n_disp()
+{
+int num = cmdMessenger.readInt16Arg();
+
+if(num ==0){  
+cmdMessenger.sendCmd(4, "\t@ init display test");
+_disp_test = true;
+
+
+}
+
+else if(num == 1){
+cmdMessenger.sendCmd(4, "\t@ init button test");
+_disp_test = true;
+
+}
+
+
+else{
+cmdMessenger.sendCmd(4, "\t@ wrong argument");
+_disp_test = false;
+  
+}
+  
+} // button_disp
+
+
+
 
 void OnUnknownCommand() // Called when a received command has no attached function
 {
@@ -35,3 +66,6 @@ void initSerial() {
   cmdMessenger.sendCmd(0, "Arduino has started!");  //boot message
 #endif
 }
+
+
+

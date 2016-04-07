@@ -23,6 +23,8 @@ long _now = 0, _btn_now = 0, _btn_scan_period = 250;
 long _sN = 0, _sC = 750;
 byte _tcnt = 0; // tick counter tracks what to display on the sector
 byte _c = 0;
+
+boolean _disp_test  = true;
 //
 byte _printArray[5] = {138, 138, 138, 138, 138}; //it the initial value of the array after first push it will be displayed
 boolean time_to_trigger( long now, long *lastNow, long callPeriod);
@@ -85,11 +87,14 @@ Serial.print(".\t");
 
 void loop() {
   _now = millis();
+
+
+  if(_disp_test){
   test_sector( CELL_CLK, CELL_DATA, CELL_LT, &_tcnt, _now, &_sN, _sC);
   //for release methods refet to 05_sketch
+  }
 
-
-/*
+else{
   if (line_is_hot()) {
     _c++;
     if (_c == 1) {
@@ -109,15 +114,9 @@ void loop() {
     //arm_segment();
     Serial.println(code, HEX);
   }
-*/
+} // else
 
-
-
-
-
-
-
-  cmdMessenger.feedinSerialData();//must be called always
+cmdMessenger.feedinSerialData();//must be called always
 }//looop
 
 

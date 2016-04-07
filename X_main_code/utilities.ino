@@ -1,6 +1,4 @@
 
-
-
 void print_byte_sector(char label[], byte secId, byte segment[]) {
   Serial.println();
   Serial.print("\t");
