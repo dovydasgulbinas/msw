@@ -20,7 +20,7 @@ struct sect_struct {
 
 long _now = 0, _btn_now = 0, _btn_scan_period = 250;
 //TEST VARS
-long _sN = 0, _sC = 750;
+long _sN = 0, _sC = 250;
 byte _tcnt = 0; // tick counter tracks what to display on the sector
 byte _c = 0;
 
@@ -49,6 +49,14 @@ byte _segment[25] = {
   6, 7, 0, 0, 0,
   8, 9, 8, 9, 1,
 };
+byte _prev_buttons[25] = {//Stores the last state of the button // JUST TO BE EXPLICIT WHAT STATE THEY ARE NOW
+LOW, LOW, LOW, LOW, LOW, 
+LOW, LOW, LOW, LOW, LOW, 
+LOW, LOW, LOW, LOW, LOW, 
+LOW, LOW, LOW, LOW, LOW, 
+LOW, LOW, LOW, LOW, LOW,  
+}
+
 
 uint8_t button_click (uint8_t line = BUTTON_LINE, byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT );
 void arm_segment( byte segment[] = _segment , byte clk = CELL_CLK, byte data = CELL_DATA , byte lt = CELL_LT);

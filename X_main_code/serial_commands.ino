@@ -31,14 +31,14 @@ _disp_test = true;
 
 else if(num == 1){
 cmdMessenger.sendCmd(4, "\t@ init button test");
-_disp_test = true;
+_disp_test = false;
 
 }
 
 
 else{
 cmdMessenger.sendCmd(4, "\t@ wrong argument");
-_disp_test = false;
+_disp_test = true;
   
 }
   
